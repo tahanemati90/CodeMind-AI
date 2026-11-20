@@ -25,16 +25,12 @@ class Diagnostic:
     def __post_init__(self) -> None:
         if not self.rule_id.strip():
             raise ValueError("rule_id cannot be empty")
-
         if not self.message.strip():
             raise ValueError("message cannot be empty")
-
         if not 0.0 <= self.confidence <= 1.0:
             raise ValueError("confidence must be between 0 and 1")
-
         if self.line is not None and self.line < 1:
             raise ValueError("line must be greater than or equal to 1")
-
         if self.column is not None and self.column < 1:
             raise ValueError("column must be greater than or equal to 1")
 
