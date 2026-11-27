@@ -6,7 +6,7 @@
 
 CodeMind AI is an intelligent Python debugging workflow that combines static analysis, isolated runtime execution, AI-assisted diagnostics, and automatic repair. It turns a Python source file and its traceback into a clear explanation, an actionable fix, and cleaner final code.
 
-![CodeMind AI architecture flowchart](image_gen_e2eebc11-75d6-4aa1-bf16-29d9a287cd1b_0.png)
+![CodeMind AI architecture flowchart](flowchart.png)
 
 *The image above illustrates the end-to-end CodeMind AI pipeline, from Python source code to validated fixed code.*
 
