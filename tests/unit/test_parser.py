@@ -60,6 +60,7 @@ def test_reports_syntax_error_in_file(tmp_path) -> None:
     assert result.diagnostics[0].rule_id == "CM000"
     assert result.diagnostics[0].file == str(path)
 
+
 def test_parses_empty_source() -> None:
     result = Parser().parse_source("")
     assert isinstance(result.tree, ast.Module)

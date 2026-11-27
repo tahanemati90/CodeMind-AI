@@ -9,11 +9,13 @@ def test_reports_undefined_variable() -> None:
     assert diagnostics[0].rule_id == "CM001"
     assert "x" in diagnostics[0].message
 
+
 def test_knows_builtin_names() -> None:
     analyzer = UndefinedVariableAnalyzer()
     source = "print('hello')\n"
     diagnostics = analyzer.analyze(source)
     assert len(diagnostics) == 0
+
 
 def test_does_not_report_variable_defined_in_scope() -> None:
     analyzer = UndefinedVariableAnalyzer()
@@ -22,9 +24,10 @@ def test_does_not_report_variable_defined_in_scope() -> None:
     diagnostics = analyzer.analyze(source)
     assert len(diagnostics) == 0
 
+
 def test_reports_undefined_if_used_before_definition_in_scope() -> None:
     analyzer = UndefinedVariableAnalyzer()
-    # اینجا x قبل از اینکه تعریف شود، چاپ شده. 
+    # اینجا x قبل از اینکه تعریف شود، چاپ شده.
     # الان احتمالاً تحلیلگر چون در کل اسکوپ x را می‌بیند، فکر می‌کند همه چیز درست است!
     source = "def func():\n    print(x)\n    x = 10\n"
     diagnostics = analyzer.analyze(source)

@@ -38,3 +38,15 @@ class Diagnostic:
         data = asdict(self)
         data["severity"] = self.severity.value
         return data
+
+
+@dataclass(frozen=True, slots=True)
+class ExecutionResult:
+    stdout: str
+    stderr: str
+    exit_code: int
+    timed_out: bool
+    traceback: str | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
