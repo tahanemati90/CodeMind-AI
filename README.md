@@ -44,3 +44,40 @@ CodeMind-AI/
 │   └── unit/             # تست‌های واحد جامع (با Pytest)
 ├── final_showcase.py     # اسکریپت دمو و نمایش نهایی قابلیت‌ها
 └── benchmark_report.md   # گزارش خروجی بنچمارک
+🛠️ نصب و راه‌اندازی (Quick Start)
+اگر می‌خوای این شاهکار رو روی سیستم خودت اجرا کنی، کافیه مراحل زیر رو بری:
+
+bash
+# ۱. کلون کردن مخزن یا ورود به پوشه پروژه
+cd CodeMind-AI
+
+# ۲. فعال‌سازی محیط مجازی (Virtual Environment)
+source .venv/bin/activate
+
+# ۳. اجرای تست‌ها برای اطمینان از سلامت سیستم
+python -m pytest -v
+
+# ۴. اجرای اسکریپت نمایش نهایی (Final Showcase)
+python3 final_showcase.py
+🎯 نحوه اجرا در نمایشی (Demo)
+برای اینکه داورها در یک نگاه عاشق پروژه بشن، می‌تونی فایل final_showcase.py رو اجرا کنی تا قدرت هوش مصنوعی رو در توضیح خطا و اصلاح خودکار کد ببینن:
+
+bash
+python3 final_showcase.py
+👥 توسعه‌دهندگان
+طاها نعمتی (توسعه‌دهنده ارشد و طراح هسته هوشمند)
+همراه و همکار عزیز در بخش Product & Interface
+<div align=“center”>
+
+ساخته شده با ❤️ و کلی ذوق برنامه‌نویسی برای فتح قله‌های فناوری! 🚀
+
+</div>
+
+EOF
+
+git add README.md
+
+git commit -m “docs: add an epic and professional README.md for CodeMind AI”
+
+git push origin main
+
