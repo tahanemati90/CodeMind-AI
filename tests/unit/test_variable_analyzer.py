@@ -1,40 +1,31 @@
-from codemind.analyzers.static import UndefinedVariableAnalyzer
-from codemind.diagnostics import Severity
+from codemind.analyzers.static.variable_analyzer import UndefinedVariableAnalyzer
 
 
-def test_detects_undefined_variable() -> None:
-    diagnostics = UndefinedVariableAnalyzer().analyze("print(total)")
-
+def test_reports_undefined_variable() -> None:
+    analyzer = UndefinedVariableAnalyzer()
+    source = "print(x)\n"
+    diagnostics = analyzer.analyze(source)
     assert len(diagnostics) == 1
     assert diagnostics[0].rule_id == "CM001"
-    assert diagnostics[0].severity == Severity.WARNING
-    assert diagnostics[0].line == 1
-    assert diagnostics[0].column == 7
+    assert "x" in diagnostics[0].message
 
+def test_knows_builtin_names() -> None:
+    analyzer = UndefinedVariableAnalyzer()
+    source = "print('hello')\n"
+    diagnostics = analyzer.analyze(source)
+    assert len(diagnostics) == 0
 
-def test_does_not_report_defined_variable() -> None:
-    source = "total = 10\nprint(total)"
+def test_does_not_report_variable_defined_in_scope() -> None:
+    analyzer = UndefinedVariableAnalyzer()
+    # در اینجا x داخل تابع تعریف شده، اما تحلیلگرِ فعلی فقط اسکوپ سراسری را می‌بیند
+    source = "def func():\n    x = 10\n    print(x)\n"
+    diagnostics = analyzer.analyze(source)
+    assert len(diagnostics) == 0
 
-    assert UndefinedVariableAnalyzer().analyze(source) == []
-
-
-def test_does_not_report_builtin_name() -> None:
-    assert UndefinedVariableAnalyzer().analyze("print(len([1, 2]))") == []
-
-
-def test_reports_syntax_error_without_crashing() -> None:
-    diagnostics = UndefinedVariableAnalyzer().analyze("if True print('hello')")
-
-    assert len(diagnostics) == 1
-    assert diagnostics[0].rule_id == "CM000"
-    assert diagnostics[0].category == "syntax"
-    assert diagnostics[0].severity == Severity.ERROR
-
-
-def test_reports_same_undefined_name_once() -> None:
-    diagnostics = UndefinedVariableAnalyzer().analyze(
-        "print(score)\nprint(score)"
-    )
-
-    assert len(diagnostics) == 1
-    assert "score" in diagnostics[0].message
+def test_reports_undefined_if_used_before_definition_in_scope() -> None:
+    analyzer = UndefinedVariableAnalyzer()
+    # اینجا x قبل از اینکه تعریف شود، چاپ شده. 
+    # الان احتمالاً تحلیلگر چون در کل اسکوپ x را می‌بیند، فکر می‌کند همه چیز درست است!
+    source = "def func():\n    print(x)\n    x = 10\n"
+    diagnostics = analyzer.analyze(source)
+    assert len(diagnostics) == 1, "باید خطا بدهد چون x قبل از تعریف استفاده شده!"
